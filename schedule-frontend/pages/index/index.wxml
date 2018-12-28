@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<view class="container">
+  <view class='line-1'>
+    <view class='line-1-item-1'>
+      <button type='primary' plain='true' bindtap='teacher_index'>教师资格证考试</button>
+    </view>
+    <view class='line-1-item-2'>
+      <button type='primary' plain='true' bindtap='cet_index'>四六级考试</button>
+    </view>
+  </view>
+  <view class='line-2'>
+    <view class='line-2-item-1'>
+      <button type='primary' plain='true' bindtap='mandarin_index'>普通话考试</button>
+    </view>
+    <view class='line-2-item-2'>
+      <button type='primary' plain='true' bindtap='vfp_index'>计算机二级考试</button>
+    </view>
+  </view>
+</view>

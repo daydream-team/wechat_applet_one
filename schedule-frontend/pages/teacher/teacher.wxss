@@ -1,0 +1,21 @@
+/* pages/teacher/teacher.wxss */
+.countdown {
+  margin-top: 20rpx;
+  text-align: center;
+}
+
+.search {
+  margin-top: 150rpx;
+}
+
+.input-yzm {
+  width:75%;
+  vertical-align:middle;
+  float: left;
+}
+
+.img-yzm {
+  width: 20%;
+  vertical-align:middle;
+  height: 85rpx;
+}
