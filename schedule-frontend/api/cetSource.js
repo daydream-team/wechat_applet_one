@@ -1,9 +1,10 @@
 import { request } from '../utils/request';
 import { domain } from './domain';
 
-export function requestSessionId (data = {}) {
+export function requestCetSource (data = {}) {
   return request({
-    url: `${domain}/sessionId`,
+    url: `${domain}/cetSource`,
+    method: 'POST',
     ...data
   }) 
 }

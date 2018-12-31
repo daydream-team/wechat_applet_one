@@ -31,7 +31,7 @@ Page({
       console.error(err);
     });
   },
-  getYzm: function(sessionId) {
+  getYzm(sessionId) {
     requestYzm({
       data: {
         sessionId
@@ -46,6 +46,9 @@ Page({
     }).catch(err => {
       console.error(err);
     });
+  },
+  updateYzm() {
+    this.getYzm(this.sessionId);
   },
   searchResult() {
     if (!this.validInput()) {
@@ -83,6 +86,11 @@ Page({
       }
     }).catch(err => {
       wx.hideToast();
+      wx.showModal({
+        title: '提示',
+        content: '系统异常，请稍后再试',
+        showCancel: false
+      })
       console.error(err);
     })
   },

@@ -1,1 +1,11 @@
-/* pages/cet/cet.wxss */
+.weui-media-box__desc {
+  margin-bottom: 10rpx;
+}
+.weui-media-box__desc:last-child {
+  margin-bottom: 0;
+}
+
+.title {
+  margin: 30rpx;
+  font-size: 36rpx;
+}

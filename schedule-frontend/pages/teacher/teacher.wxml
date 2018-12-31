@@ -26,7 +26,7 @@
           <input class="weui-input" placeholder="请输入验证码" bindinput="inputYzm" />
         </view>
         <view class="weui-cell__ft">
-          <image class="weui-vcode-img" src="{{ imageBase64 }}" style="width: 108px"></image>
+          <image class="weui-vcode-img" src="{{ imageBase64 }}" style="width: 108px" bindtap="updateYzm"></image>
         </view>
       </view>
     </view>
