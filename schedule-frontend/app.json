@@ -8,7 +8,7 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#66B1FF",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "考试排期表",
     "navigationBarTextStyle": "black"
   }
