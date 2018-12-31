@@ -136,12 +136,12 @@ public class DemoController {
     public CetResult cetSource(@RequestBody Map<String, String> params) throws UnsupportedEncodingException {
         String time = params.get("timestamp");
         String key = params.get("key");
-        String cet = params.get("cet"); // six or four
+//        String cet = params.get("cet"); // six or four
         String IdCard = params.get("IdCard");
         String name = params.get("name");
         String yzm = params.get("yzm");
         String data;
-        if ("six".equals(cet)) {
+        if ("2".equals(IdCard.substring(9,10))) {
             data = "CET6_181_DANGCI," + IdCard + "," + name;
         } else {
             data = "CET4_181_DANGCI," + IdCard + "," + name;
