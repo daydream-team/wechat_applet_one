@@ -9,6 +9,8 @@ import com.example.demo.utils.HtmlUtil;
 import jodd.http.Cookie;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
+import jodd.http.ProxyInfo;
+import jodd.http.net.SocketHttpConnectionProvider;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import sun.misc.BASE64Encoder;
+import sun.net.util.IPAddressUtil;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,7 +39,12 @@ import java.util.Map;
 public class DemoController {
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String hello() {
+    public String hello(HttpServletRequest request) {
+        Map<String, String> map = getHost(request);
+        String ip = map.get("ip");
+        System.out.println();
+        System.out.println(map.get("port"));
+        System.out.println(internalIp(ip));
         return "hello";
     }
 
@@ -74,7 +83,7 @@ public class DemoController {
                 .form(fromData).cookies(cookie).send();
         response.header("Content-Type", "text/html;charset=utf-8");
         String html = new String(response.body().getBytes("iso-8859-1"), "UTF8");
-        Result result = null;
+        Result result = new Result();
         try {
             result = HtmlUtil.parse(html);
         } catch (Exception e) {
@@ -176,6 +185,15 @@ public class DemoController {
         return result;
     }
 
+    private Map<String, String> getHost(HttpServletRequest request) {
+        Map<String, String> map = new HashMap<>();
+        String ip = request.getRemoteAddr();
+        int port = request.getRemotePort();
+        map.put("ip", ip);
+        map.put("port", String.valueOf(port));
+        return map;
+    }
+
     private String encodeImgageToBase64(String imageUrl) {
         ByteArrayOutputStream outputStream = null;
         try {
@@ -189,8 +207,43 @@ public class DemoController {
         }
         // 对字节数组Base64编码
         BASE64Encoder encoder = new BASE64Encoder();
-        String encrypted = encoder.encode(outputStream.toByteArray());
-        return "data:image/jpeg;base64," + encrypted.replace("\r\n", "");
+        String encrypted = encoder.encode(outputStream.toByteArray()).replace("\r\n", "").replace("\n", "");
+        return "data:image/jpeg;base64," + encrypted;
+    }
+
+    private boolean internalIp(String ip) {
+        try {
+            byte[] addr = IPAddressUtil.textToNumericFormatV4(ip);
+            final byte b0 = addr[0];
+            final byte b1 = addr[1];
+            //10.x.x.x/8
+            final byte SECTION_1 = 0x0A;
+            //172.16.x.x/12
+            final byte SECTION_2 = (byte) 0xAC;
+            final byte SECTION_3 = (byte) 0x10;
+            final byte SECTION_4 = (byte) 0x1F;
+            //192.168.x.x/16
+            final byte SECTION_5 = (byte) 0xC0;
+            final byte SECTION_6 = (byte) 0xA8;
+            switch (b0) {
+                case SECTION_1:
+                    return true;
+                case SECTION_2:
+                    if (b1 >= SECTION_3 && b1 <= SECTION_4) {
+                        return true;
+                    }
+                case SECTION_5:
+                    switch (b1) {
+                        case SECTION_6:
+                            return true;
+                    }
+                default:
+                    return false;
+
+            }
+        } catch (Exception e) {
+            return true;
+        }
     }
 
 }

@@ -5,6 +5,8 @@
 //import jodd.http.Cookie;
 //import jodd.http.HttpRequest;
 //import jodd.http.HttpResponse;
+//import jodd.http.ProxyInfo;
+//import jodd.http.net.SocketHttpConnectionProvider;
 //import org.joda.time.DateTime;
 //import org.junit.Test;
 //
@@ -115,6 +117,17 @@
 //        String result = str.substring(str.indexOf("\"") + 1, str.lastIndexOf("\""));
 //        JSONObject json = JSON.parseObject(result);
 //        System.out.println(json.getString("error"));
+//    }
+//
+//    @Test
+//    public void testSessionId() {
+//        HttpRequest httpRequest = HttpRequest.post("https://ntcecf4.neea.edu.cn/");
+//        SocketHttpConnectionProvider s = new SocketHttpConnectionProvider();
+//        s.useProxy(ProxyInfo.httpProxy("119.123.79.249", 53288, null, null));
+//        httpRequest.withConnectionProvider(s);
+//        // 1.先访问网站拿到sessionId
+//        HttpResponse response = httpRequest.send();
+//        System.out.println(response);
 //    }
 //
 //}
