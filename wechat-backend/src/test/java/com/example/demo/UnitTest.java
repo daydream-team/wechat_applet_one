@@ -1,5 +1,7 @@
 //package com.example.demo;
 //
+//import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSONObject;
 //import jodd.http.Cookie;
 //import jodd.http.HttpRequest;
 //import jodd.http.HttpResponse;
@@ -103,8 +105,16 @@
 //
 //    @Test
 //    public void testCode() throws UnsupportedEncodingException {
-//        String test = "<script>document.domain='neea.edu.cn';</script><script>parent.result.callback(\"{z:'451010181207023',n:'æ\u009D\u008Eç\u0087\u0095å¨\u009F',x:'å¹¿è¥¿å¤§å\u00AD¦',s:296.00,t:0,l:90,r:107,w:99,kyz:'--',kys:'--'}\");</script>";
+//        String test = "<script>document.domain='neea.edu.cn';</script><script>parent.result.callback(\"{error:'æ\u008A±æ\u00AD\u0089ï¼\u008Céª\u008Cè¯\u0081ç \u0081é\u0094\u0099è¯¯ï¼\u0081'}\");</script>";
 //        System.out.println(new String(test.getBytes("iso-8859-1"), "UTF8"));
+//    }
+//
+//    @Test
+//    public void testCetparse() {
+//        String str = "<script>document.domain='neea.edu.cn';</script><script>parent.result.callback(\"{z:'451010181207023',n:'李燕娟',x:'广西大学',s:296.00,t:0,l:90,r:107,w:99,kyz:'--',kys:'--'}\");</script>";
+//        String result = str.substring(str.indexOf("\"") + 1, str.lastIndexOf("\""));
+//        JSONObject json = JSON.parseObject(result);
+//        System.out.println(json.getString("error"));
 //    }
 //
 //}
