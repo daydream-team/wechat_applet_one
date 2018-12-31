@@ -1,19 +1,23 @@
-<!--index.wxml-->
-<view class="container">
-  <view class='line-1'>
-    <view class='line-1-item-1'>
-      <button type='primary' plain='true' bindtap='teacher_index'>教师资格证考试</button>
-    </view>
-    <view class='line-1-item-2'>
-      <button type='primary' plain='true' bindtap='cet_index'>四六级考试</button>
-    </view>
-  </view>
-  <view class='line-2'>
-    <view class='line-2-item-1'>
-      <button type='primary' plain='true' bindtap='mandarin_index'>普通话考试</button>
-    </view>
-    <view class='line-2-item-2'>
-      <button type='primary' plain='true' bindtap='vfp_index'>计算机二级考试</button>
+<!-- index.wxml -->
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-grids container">
+      <navigator url="/pages/teacher/teacher" class="weui-grid entry" hover-class="weui-grid_active">
+        <image class="weui-grid__icon" src="../../images/teacher.png" />
+        <view class="weui-grid__label entry-text">教师资格证</view>
+      </navigator>
+      <navigator url="/pages/cet/cet" class="weui-grid entry" hover-class="weui-grid_active">
+        <image class="weui-grid__icon" src="../../images/cet.png" />
+        <view class="weui-grid__label entry-text">四六级</view>
+      </navigator>
+      <navigator url="/pages/mandarin/mandarin" class="weui-grid entry" hover-class="weui-grid_active">
+      <image class="weui-grid__icon" src="../../images/mandarin.png" />
+        <view class="weui-grid__label entry-text">普通话</view>
+      </navigator>
+      <navigator url="/pages/vfp/vfp" class="weui-grid entry" hover-class="weui-grid_active">
+        <image class="weui-grid__icon" src="../../images/computer.png" />
+        <view class="weui-grid__label entry-text">计算机二级</view>
+      </navigator>
     </view>
   </view>
 </view>
