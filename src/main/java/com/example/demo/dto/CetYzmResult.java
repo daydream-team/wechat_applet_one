@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class CetYzmResult {
 
-    private String imgUrl;
+    private String imgBase64;
 
     private long timestamp;
 

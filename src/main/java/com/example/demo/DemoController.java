@@ -15,8 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import sun.misc.BASE64Encoder;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +74,13 @@ public class DemoController {
                 .form(fromData).cookies(cookie).send();
         response.header("Content-Type", "text/html;charset=utf-8");
         String html = new String(response.body().getBytes("iso-8859-1"), "UTF8");
-        Result result = HtmlUtil.parse(html);
+        Result result = null;
+        try {
+            result = HtmlUtil.parse(html);
+        } catch (Exception e) {
+            result.setCode("ERROR");
+            return result;
+        }
         System.out.println(html);
         result.setCode("OK");
         return result;
@@ -76,7 +89,7 @@ public class DemoController {
     //-----------------------------CET-6--------------------------//
 
     @RequestMapping(value = "/cetYzm", method = RequestMethod.GET)
-    public CetYzmResult getCETYzm() {
+    public CetYzmResult getCETYzm(String IdCard) {
         CetYzmResult result = new CetYzmResult();
         HttpResponse response = HttpRequest.get("http://cet.neea.edu.cn/cet/")
                 .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36").send();
@@ -87,7 +100,7 @@ public class DemoController {
         result.setTimestamp(time);
 
         double random = Math.random();
-        String imgUrl = "http://cache.neea.edu.cn/Imgs.do?c=CET&ik=" + "451010181207023" + "&t=" + random;
+        String imgUrl = "http://cache.neea.edu.cn/Imgs.do?c=CET&ik=" + IdCard + "&t=" + random;
         System.out.println(imgUrl);
         Map<String, String> headers = new HashMap<>();
         headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36");
@@ -106,7 +119,7 @@ public class DemoController {
         System.out.println(imgResponse.body());
         String body = imgResponse.body();
         String yzmUrl = body.substring(body.indexOf("\"") + 1, body.lastIndexOf("\""));
-        result.setImgUrl(yzmUrl);
+        result.setImgBase64(encodeImgageToBase64(yzmUrl));
         return result;
     }
 
@@ -152,15 +165,32 @@ public class DemoController {
             return result;
         }
         result.setCode("OK");
-        Double sum = (Double) json.get("s");
-        Double listen = (Double) json.get("l");
-        Double write = (Double) json.get("w");
-        Double read = (Double) json.get("r");
+        Double sum = Double.parseDouble(json.getString("s"));
+        Double listen = Double.parseDouble(json.getString("l"));
+        Double write = Double.parseDouble(json.getString("w"));
+        Double read = Double.parseDouble(json.getString("r"));
         result.setListen(listen);
         result.setReading(read);
         result.setWriteAndTranslate(write);
         result.setSum(sum);
         return result;
+    }
+
+    private String encodeImgageToBase64(String imageUrl) {
+        ByteArrayOutputStream outputStream = null;
+        try {
+            BufferedImage bufferedImage = ImageIO.read(new URL(imageUrl));
+            outputStream = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "jpg", outputStream);
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 对字节数组Base64编码
+        BASE64Encoder encoder = new BASE64Encoder();
+        String encrypted = encoder.encode(outputStream.toByteArray());
+        return "data:image/jpeg;base64," + encrypted.replace("\r\n", "");
     }
 
 }
