@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
     "pages/cet/cet",
     "pages/teacher/teacher",
     "pages/mandarin/mandarin",
@@ -9,26 +8,8 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#66B1FF",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "考试排期表",
     "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/logs/logs",
-        "text": "日志"
-      },
-      {
-        "pagePath": "pages/teacher/teacher",
-        "text": "教师资格证"
-      }
-    ],
-    "backgroundColor": "#66B1FF",
-    "color": "#FFFFFF"
   }
 }

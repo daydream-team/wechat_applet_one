@@ -1,34 +1,72 @@
-<view class='countdown'>
-  <view class="progress-item">
-    <text>报名倒计时 {{ apply_left }}</text>
-    <i-progress percent='{{ apply_percent }}' status='success'stroke-width="25"></i-progress>
-  </view>
-
-  <view class="progress-item">
-    <text>笔试倒计时 {{ write_left }}</text>
-    <i-progress percent='{{ write_percent }}' status='wrong'stroke-width="25"></i-progress>
-  </view>
-
-  <view class="progress-item">
-    <text>面试倒计时 {{ interview_left }}</text>
-    <i-progress percent='{{ interview_percent }}' status='active'stroke-width="25"></i-progress>
-  </view>
-
-  <view class='search'>
-    <text>成绩查询</text>
-    <i-panel title="基础用法">
-    <view class='search-item'>
-      <i-input name="name" bind:blur="nameInput" title="姓名" autofocus placeholder="请输入你的名字" />
+<view class="page">
+  <view class="title">教师资格证成绩查询</view>
+  <view wx:if="{{ !result }}">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">姓名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入姓名" bindinput="inputName" value="{{ name }}" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">身份证号</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入身份证" bindinput="inputZjhm" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+          <view class="weui-label">验证码</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入验证码" bindinput="inputYzm" />
+        </view>
+        <view class="weui-cell__ft">
+          <image class="weui-vcode-img" src="{{ imageBase64 }}" style="width: 108px"></image>
+        </view>
+      </view>
     </view>
-    <view class='search-item'>
-      <i-input name="zjhm" bind:blur="zjhmInput" title="身份证号码" maxlength='18' autofocus placeholder="请输入你的身份证号码" />
+    <view class="weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="searchResult">查询</button>
     </view>
-    <view class='search-item'>
-      <i-input class='input-yzm' bind:blur="yzmInput" name="yzm" title="验证码" autofocus placeholder="           请输入验证码" />
-      <image class='img-yzm' src='{{ image }}'></image>
-    </view>
-    <i-button bind:click="handleClick" type="primary" >点击查询</i-button>
-    </i-panel>
   </view>
-
+  <view wx:else>
+    <view class="weui-panel">
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_text">
+          <view class="weui-media-box__desc">姓名：{{ result.name }}</view>
+          <view class="weui-media-box__desc">身份证号: {{ result.zjhm }}</view>
+        </view>
+      </view>
+    </view>
+    <view class="title">考试成绩</view>
+    <view class="weui-panel" wx:for="{{ result.writes }}">
+      <view class="weui-panel__hd">{{ item.subject }}</view>
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_text">
+          <view class="weui-media-box__desc">报告分：{{ item.source }}</view>
+          <view class="weui-media-box__desc">合格与否: {{ item.pass }}</view>
+          <view class="weui-media-box__desc">准考证号: {{ item.number }}</view>
+          <view class="weui-media-box__desc">考试批次: {{ item.batch }}</view>
+          <view class="weui-media-box__desc">考试省份: {{ item.province }}</view>
+        </view>
+      </view>
+    </view>
+    <view class="title">面试成绩</view>
+    <view class="weui-panel" wx:for="{{ result.interViews }}">
+      <view class="weui-panel__hd">{{ item.subject }}</view>
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_text">
+          <view class="weui-media-box__desc">合格与否: {{ item.pass }}</view>
+          <view class="weui-media-box__desc">准考证号: {{ item.number }}</view>
+          <view class="weui-media-box__desc">考试批次: {{ item.batch }}</view>
+          <view class="weui-media-box__desc">考试省份: {{ item.province }}</view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

@@ -9,10 +9,12 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false
+		"nodeModules": false,
+		"autoAudits": false,
+		"uglifyFileName": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.4.2",
+	"libVersion": "2.4.3",
 	"appid": "wx13129b0bac2bd39b",
 	"projectname": "schedule",
 	"debugOptions": {
@@ -40,9 +42,10 @@
 			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "teacher",
-					"pathName": "pages/teacher/teacher"
+					"pathName": "pages/teacher/teacher",
+					"query": ""
 				}
 			]
 		}
